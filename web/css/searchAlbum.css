@@ -1,0 +1,44 @@
+.button {
+    background-color: #3399ff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 2px solid #3399ff;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.button:hover {
+    background-color: #008CBA; /* Green */
+    color: white;
+}
+
+
+
+.inputText {
+    width: 120%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.personalTable {
+    border: 2px solid blue;
+    border-collapse:collapse;
+    width: 100%;
+    text-align: center;
+    padding:10px;
+
+
+}
+.personalTable tr:hover {background-color: #008CBA}
+.personalTable th {
+    background-color: #99ff99; 
+}

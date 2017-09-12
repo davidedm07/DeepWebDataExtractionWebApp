@@ -1,0 +1,19 @@
+
+.linksbutton {
+    background-color: #3399ff;
+    color: white;
+    padding: 8px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 4px;
+    border: 2px solid #3399ff;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+
+.linksbutton:hover {
+    background-color: #008CBA; /* Green */
+    color: white;
+}
