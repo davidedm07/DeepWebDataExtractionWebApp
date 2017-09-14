@@ -112,14 +112,6 @@ public class Avax extends Source {
 			// PATTERN FUNZIONANTE PRECEDENTE A-Za-z_]+([a-zA-Z_.0-9' ])*
 			Pattern p = Pattern.compile("[A-Za-z_]+([a-zA-Z_.?!' ])*");
 			Matcher m;
-			/*
-			m = p.matcher(tracklist.getParent().getText().trim());
-			while(m.find()) {
-				//System.out.println(m.group());
-				tracks.add(m.group());	
-			}
-			*/
-
 			for (String rawTrack : listTracks)
 				if (!rawTrack.isEmpty() && !rawTrack.equals(" ") && !rawTrack.contains("CD")) {
 					m = p.matcher(rawTrack.trim());

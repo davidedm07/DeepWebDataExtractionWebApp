@@ -15,34 +15,25 @@
         src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script
         src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<div class ="container" style="background-color:yellowgreen;padding-bottom:100%;margin: 0;width: 100%;height: 100%;">
-<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+<body style="background-color: yellowgreen">
+<div class ="container" style="background-color:yellowgreen;margin: 0;width: 100%;height: 100%;">
+<header class="navbar navbar-inverse navbar-fixed-top" style="padding: 0;">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="home.jsp"><img src="img/logo.png" alt="Basica"/></a>
+            <a class="navbar-brand" href="home.xhtml" style="position:relative;margin-top:0;top: 0">
+                <img  style="position:relative;top:0;margin-top: 0;height:70px;width: 300px" src="img/deep-web-logo.jpg"
+                      alt="logo"/></a>
         </div>
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse" style="padding: 20px;">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="home.jsp">Home</a></li>
+                <li><a href="home.xhtml">Home</a></li>
                 <li class="active"><a href="searchAlbum.xhtml">Search Album</a></li>
-                <li><a href="links.xhtml"> Links</a> </li>
-                <li class="dropdown"><a href="#" class="dropdown-toggle"
-                                        data-toggle="dropdown">Pages <i class="icon-angle-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Dropdown Menu 1</a></li>
-                        <li><a href="#">Dropdown Menu 2</a></li>
-                        <li><a href="#">Dropdown Menu 3</a></li>
-                        <li><a href="#">Dropdown Menu 4</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Use</a></li>
-                    </ul></li>
             </ul>
         </div>
     </div>
 </header>
 
-    <div class="container" style="background-color: lightyellow;margin-top:150px;width: 40%;height: 120%;padding:20px;">
+    <div class="container" style="background-color: lightyellow;margin-top:150px;width: 40%;height: 100%;padding:20px;">
         <f:view>
             <h:form>
                 <div class="col-sm-offset-4 col-sm-5">
@@ -66,8 +57,28 @@
                 </div>
             </h:form>
         </f:view>
-
-        <br />
     </div>
 </div>
+<div class="footer" style="position: absolute;bottom: 0;width: 100%">
+    <div class="container">
+        <div class="row">
+            <div class="col-footer col-md-4 col-xs-6">
+                <h3>Contact Me</h3>
+                <p class="contact-us-details">
+                    <b>Email:</b>
+                    <a href="mailto:davide.dimaria07@gmail.com">davide.dimaria07@gmail.com</a>
+                </p>
+            </div>
+            <div class="col-footer col-md-4 col-xs-6">
+                <h3>My Social Networks</h3>
+                <p> You can contact me through social networks like Facebook or Twitter</p>
+                <div>
+                    <img src="img/icons/facebook.png" width="32" alt="Facebook" />
+                    <img src="img/icons/twitter.png" width="32" alt="Twitter"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
 </html>

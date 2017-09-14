@@ -2,7 +2,7 @@
 	General Style
 --------------------------------------------------------------------------*/
 body {
-  background: #FFFFFF;
+  background: yellowgreen;
 }
 .section {
   padding: 30px 0;
@@ -13,7 +13,7 @@ body {
   transform: translateZ(0);
 }
 .section-white {
-  background: #FFF;
+  background: yellowgreen;
 }
 .section-dark {
   background: #151515;
@@ -1064,7 +1064,6 @@ border:none;
   display: block;
   width: 115px;
   height: 40px;
-  background: url(../img/stay-connected.png);
   -webkit-opacity: 0.5;
   -moz-opacity: 0.5;
   opacity: 0.5;
@@ -1197,9 +1196,6 @@ border:none;
   border: 1px solid #3b3c41;
   outline: 0;
 }
-.btn:selected {
-outline: 0;
-}
 .btn .caret {
   border-top: 4px solid #FFF;
 }
@@ -1271,4 +1267,35 @@ outline: 0;
 }
 .dropdown.open a.dropdown-toggle .caret {
   border-top: 4px solid #FFF;
+}
+
+.textCarousel {
+    margin-top: 20px;
+    font-size: 24px;
+    z-index:100;
+    position:absolute;    
+    color:white;
+    font-weight:bold;
+    left:350px;
+    top:20px;
+}
+
+#publicWeb {
+  z-index:100;
+  position:absolute;
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  left:700px;
+  top:220px;
+}
+
+#deepWeb {
+  z-index:100;
+  position:absolute;
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  left:700px;
+  top:400px;
 }
