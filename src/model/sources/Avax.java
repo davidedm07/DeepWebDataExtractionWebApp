@@ -7,13 +7,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.jaunt.Element;
-import com.jaunt.NotFound;
-import com.jaunt.ResponseException;
-import com.jaunt.UserAgent;
+import com.jaunt.*;
 import com.jaunt.component.Form;
+import org.jsoup.Jsoup;
 
 public class Avax extends Source {
+
+	private List<String> albumLinks = new ArrayList<>();
+
 
 	public Avax() {
 		super("http://avaxhome5lcpcok5.onion/");
@@ -69,9 +70,32 @@ public class Avax extends Source {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return answer;
 	}
 
+	public boolean checkAlbumPresence(String query,com.jaunt.Document page) {
+		String artist,album;
+		boolean found =false;
+			artist = query.split("\t")[0];
+			album = query.split("\t")[1];
+			org.jsoup.nodes.Document doc = Jsoup.parse(page.outerHTML());
+			org.jsoup.select.Elements links = doc.select("a[href]");
+			for(int i=0;i<links.size();i++) {
+				String link = links.get(i).text().toLowerCase();
+				System.out.println(link);
+				if(link.contains(artist) && link.contains(album)) {
+					found = true;
+					this.albumLinks.add(link);
+				}
+			}
+
+		return found;
+	}
+
+	// albumLinks contiene tutti i link rilevanti per la query
+	// possibile ricerca dei dati dell'album in più link
+	// modificare la parte della ricerca dei dettagli utilizzando la lista
 	public com.jaunt.Document getAlbumDetails(com.jaunt.Document queryResult) {
 		UserAgent userAgent = new UserAgent(); //create new userAgent (headless browser)
 		userAgent.setProxyHost("127.0.0.1");
@@ -87,6 +111,27 @@ public class Avax extends Source {
 			e.printStackTrace();
 		} catch (ResponseException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return answer;
+	}
+
+	public com.jaunt.Document checkAllLinks(com.jaunt.Document queryResult) {
+		UserAgent userAgent = new UserAgent(); //create new userAgent (headless browser)
+		userAgent.setProxyHost("127.0.0.1");
+		userAgent.setProxyPort(8118);
+		com.jaunt.Document answer = null;
+		try {
+			for (String link:albumLinks) {
+				userAgent.visit(link);
+				answer = userAgent.doc;
+				List<String> tracklist = getTracklist(answer);
+				String description = getDescription(answer);
+				if (tracklist!=null && !description.isEmpty())
+					break;
+
+			}
+		} catch (ResponseException e) {
 			e.printStackTrace();
 		}
 		return answer;

@@ -74,7 +74,6 @@ public class InternetArchive extends Source{
 				tmp.append(line);
 			} 
 			doc = Jsoup.parse(String.valueOf(tmp));
-			//System.out.println(getLinksTrack(doc));
 			
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -28,12 +28,18 @@ public class DWDataExtractionController {
 		Avax albumSource = new Avax();
 		FacesContext facesContext = FacesContext. getCurrentInstance();
 		try {
-			com.jaunt.Document queryPage = albumSource.applyQuery(artist + " " + albumTitle);
+			String query = artist + "\t" + albumTitle;
+			com.jaunt.Document queryPage = albumSource.applyQuery(query);
+			if(!albumSource.checkAlbumPresence(query,queryPage))
+				return "error";
 			com.jaunt.Document albumDetails = albumSource.getAlbumDetails(queryPage);
 			this.description = albumSource.getDescription(albumDetails);
 			this.tracklist = albumSource.getTracklist(albumDetails);
 			this.coverLink = albumSource.getCover(albumDetails);
-			this.album = new Album(this.artist,this.albumTitle,this.description,this.tracklist);
+			this.album = new Album(this.artist,this.albumTitle,this.description,this.tracklist)
+			;
+			if(this.tracklist.size()==0 || this.description==null)
+				return "error";
 			HttpSession session = (HttpSession)facesContext.getExternalContext().getSession(true);
 			session.setAttribute("album",album);
 			session.setAttribute("cover",coverLink);
@@ -49,6 +55,8 @@ public class DWDataExtractionController {
 		try {
 			org.jsoup.nodes.Document linksPage = linksSource.applyQuery(this.artist + " " + track);
 			this.links = linksSource.getLinksTrack(linksPage);
+			if (this.links.size()== 0)
+				return "linkNotFound";
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
