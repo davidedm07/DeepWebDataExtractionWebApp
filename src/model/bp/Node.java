@@ -15,7 +15,7 @@ public class Node implements Comparable<Node> {
 	private int position;
 	private Atom atom;
 	private CQ cq;
-	
+	private Relation relation;
 	private boolean extensional;
 	private Node parent;
 
@@ -24,7 +24,12 @@ public class Node implements Comparable<Node> {
 	enum Color {
 		BLACK, WHITE
 	}	
-	
+
+	public Node(String id,Relation r) {
+		this.id = id;
+		this.relation=r;
+	}
+
 	public Node(String id) {
 		this.id = id;
 		this.color = Color.WHITE;
@@ -156,4 +161,11 @@ public class Node implements Comparable<Node> {
 		counterMap = new TreeMap<String,Integer>();
 	}
 
+	public Relation getRelation() {
+		return relation;
+	}
+
+	public void setRelation(Relation relation) {
+		this.relation = relation;
+	}
 }

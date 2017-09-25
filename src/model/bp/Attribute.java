@@ -4,9 +4,17 @@ public class Attribute {
 	
 	AccessLimitation accessLimitation;
 	String name;
+	private String domain;
 	
 	public enum AccessLimitation {
 		BOUND, FREE
+	}
+
+	public Attribute(String name,String domain, AccessLimitation accessLimitation) {
+		this.name = name;
+		this.domain = domain;
+		this.accessLimitation = accessLimitation;
+
 	}
 
 	public Attribute(Attribute a) {
@@ -40,7 +48,9 @@ public class Attribute {
 	}
 
 	public String toString() {
-		return name + "/" + (accessLimitation == AccessLimitation.FREE ? "f" : "b");
+		if (this.domain==null)
+			return name +":Unknown"+ "/" + (accessLimitation == AccessLimitation.FREE ? "f" : "b");
+		return name +":"+ this.domain + "/" + (accessLimitation == AccessLimitation.FREE ? "f" : "b");
 	}
 
 	public boolean equals(Object o) {
@@ -48,4 +58,11 @@ public class Attribute {
 		return a.name.equals(name) && a.accessLimitation == accessLimitation;
 	}
 
+	public String getDomain() {
+		return domain;
+	}
+
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
 }

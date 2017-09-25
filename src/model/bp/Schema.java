@@ -1,17 +1,20 @@
 package model.bp;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Schema implements Comparable<Schema> {
 
 	private String name;
+	private List<Relation> relations;
 	private Attribute[] attributes;
 	protected boolean fake = false;
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String name) {
+	public Schema(String name, List<Relation> relations) {
 		this.name = name;
+		this.relations = relations;
 	}
 
 	public Schema(String name, Attribute[] attributes) {
@@ -20,7 +23,17 @@ public class Schema implements Comparable<Schema> {
 	}
 
 	public Attribute[] getAttributes() {
-		return attributes;
+		if(this.attributes!= null)
+			return this.attributes;
+		else {
+			List<Attribute> attributes = new ArrayList<>();
+			for(Relation r:this.relations)
+				attributes.addAll(r.getAttributes());
+			Attribute[] result = new Attribute[attributes.size()];
+			result = attributes.toArray(result);
+			return result;
+
+		}
 	}
 
 	public void setAttributes(Attribute[] attributes) {
@@ -35,6 +48,11 @@ public class Schema implements Comparable<Schema> {
 			if (i++ < attributes.length - 1) sb.append(",");
 		}
 		return sb.toString() + ")";
+	}
+
+
+	public String getDescription() {
+		return this.name + "\n" + this.relations.toString();
 	}
 
 	public int compareTo(Schema s) {
@@ -53,6 +71,23 @@ public class Schema implements Comparable<Schema> {
 		return true;
 	}
 
+	public Map<String,List<Attribute>> getDomainsMap() {
+		Map<String,List<Attribute>> result = new HashMap<>();
+		if (this.attributes== null)
+			this.attributes = getAttributes();
+		for(Attribute a:this.attributes) {
+			String domain = a.getDomain();
+			if(result.containsKey(domain))
+				result.get(domain).add(a);
+			else {
+				List<Attribute> list = new ArrayList<>();
+				list.add(a);
+				result.put(domain,list);
+			}
+		}
+		return result;
+	}
+
 	@Override
 	public int hashCode() {
 		// TODO Auto-generated method stub
@@ -65,5 +100,21 @@ public class Schema implements Comparable<Schema> {
 	
 	public boolean isFake() {
 		return fake;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<Relation> getRelations() {
+		return relations;
+	}
+
+	public void setRelations(List<Relation> relations) {
+		this.relations = relations;
 	}
 }

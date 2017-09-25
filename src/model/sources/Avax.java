@@ -83,10 +83,10 @@ public class Avax extends Source {
 			org.jsoup.select.Elements links = doc.select("a[href]");
 			for(int i=0;i<links.size();i++) {
 				String link = links.get(i).text().toLowerCase();
-				System.out.println(link);
 				if(link.contains(artist) && link.contains(album)) {
 					found = true;
-					this.albumLinks.add(link);
+					String testLink = links.get(i).attr("href");
+					this.albumLinks.add(testLink);
 				}
 			}
 
@@ -123,6 +123,7 @@ public class Avax extends Source {
 		com.jaunt.Document answer = null;
 		try {
 			for (String link:albumLinks) {
+				System.out.println(link);
 				userAgent.visit(link);
 				answer = userAgent.doc;
 				List<String> tracklist = getTracklist(answer);
