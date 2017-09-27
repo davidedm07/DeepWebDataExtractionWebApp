@@ -1,6 +1,9 @@
 package controller;
 
 import model.Album;
+import model.bp.Attribute;
+import model.bp.KeywordQuery;
+import model.bp.Relation;
 import model.sources.Avax;
 import model.sources.InternetArchive;
 
@@ -9,6 +12,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 
@@ -23,6 +27,16 @@ public class DWDataExtractionController {
 	private List<String> tracklist;
 	private String coverLink;
 	private List<String> links;
+	// check compatibility variables
+	private KeywordQuery query;
+	private List<Relation> relations;
+	private Relation currentRelation;
+	private String relationName;
+	private List<Attribute> relationAttributes;
+	private Attribute currentAttribute;
+	private String attributeValue;
+	private String attributeDomain;
+	private String accessLimitation;
 
 	public String searchAlbum() throws IOException {
 		Avax albumSource = new Avax();
@@ -63,6 +77,31 @@ public class DWDataExtractionController {
 		return "links?faces-redirect=true";
 	}
 
+	public String checkCompatibility() {
+		return "";
+	}
+
+	public String createAttribute() {
+		Attribute.AccessLimitation access=null;
+		if (this.accessLimitation.equals("Free"))
+			access = Attribute.AccessLimitation.FREE;
+		else if(this.accessLimitation.equals("Bound"))
+			access = Attribute.AccessLimitation.BOUND;
+		this.currentAttribute = new Attribute(this.attributeValue,this.attributeDomain,access);
+		if(this.relationAttributes==null)
+			this.relationAttributes= new ArrayList<>();
+		this.relationAttributes.add(this.currentAttribute);
+		return "attributes?faces-redirect=true";
+	}
+
+	public String createRelation() {
+		if(this.relationName.equals("") || this.relationAttributes==null || this.relationAttributes.size()==0)
+			return "relationError";
+		this.currentRelation= new Relation(this.relationName,this.relationAttributes);
+		return "relation?faces-redirect=true";
+	}
+
+	// GETTER AND SETTER
 	public String getArtist() {
 		return artist;
 	}
@@ -125,5 +164,77 @@ public class DWDataExtractionController {
 
 	public void setLinks(List<String> links) {
 		this.links = links;
+	}
+
+	public KeywordQuery getQuery() {
+		return query;
+	}
+
+	public void setQuery(KeywordQuery query) {
+		this.query = query;
+	}
+
+	public List<Relation> getRelations() {
+		return relations;
+	}
+
+	public void setRelations(List<Relation> relations) {
+		this.relations = relations;
+	}
+
+	public Relation getCurrentRelation() {
+		return currentRelation;
+	}
+
+	public void setCurrentRelation(Relation currentRelation) {
+		this.currentRelation = currentRelation;
+	}
+
+	public List<Attribute> getRelationAttributes() {
+		return relationAttributes;
+	}
+
+	public void setRelationAttributes(List<Attribute> relationAttributes) {
+		this.relationAttributes = relationAttributes;
+	}
+
+	public Attribute getCurrentAttribute() {
+		return currentAttribute;
+	}
+
+	public void setCurrentAttribute(Attribute currentAttribute) {
+		this.currentAttribute = currentAttribute;
+	}
+
+	public String getRelationName() {
+		return relationName;
+	}
+
+	public void setRelationName(String relationName) {
+		this.relationName = relationName;
+	}
+
+	public String getAttributeValue() {
+		return attributeValue;
+	}
+
+	public void setAttributeValue(String attributeValue) {
+		this.attributeValue = attributeValue;
+	}
+
+	public String getAttributeDomain() {
+		return attributeDomain;
+	}
+
+	public void setAttributeDomain(String attributeDomain) {
+		this.attributeDomain = attributeDomain;
+	}
+
+	public String getAccessLimitation() {
+		return accessLimitation;
+	}
+
+	public void setAccessLimitation(String accessLimitation) {
+		this.accessLimitation = accessLimitation;
 	}
 }
