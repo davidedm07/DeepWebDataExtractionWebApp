@@ -35,7 +35,7 @@ public class DeepWebExtraction {
 			e.printStackTrace();
 		}
 		*/
-
+		/*
 		List<Attribute> r1Attributes = new ArrayList<>();
 		Attribute name = new Attribute("Name", "Person",Attribute.AccessLimitation.FREE);
 		Attribute age = new Attribute("Age","Number",Attribute.AccessLimitation.BOUND);
@@ -67,6 +67,18 @@ public class DeepWebExtraction {
 		System.out.println(DeepWeb.checkCompatibility(query,schema));
 		//SchemaJoinGraph sj = new SchemaJoinGraph(relations);
 		//System.out.println(sj.toString());
+		*/
+		String queryString = "Test;Leo Messi:Person;Camp nou:Place";
+		String[] queryParts =queryString.split(";");
+		String tabString ="";
+		if(queryParts.length==0)
+			System.out.println("error");
+		for (int i=0;i<queryParts.length-1;i++) {
+			tabString += queryParts[i] + "\t";
+		}
+		tabString +=queryParts[queryParts.length-1];
+		System.out.println(tabString);
+		KeywordQuery query = new KeywordQuery(tabString);
 	}
 
 }

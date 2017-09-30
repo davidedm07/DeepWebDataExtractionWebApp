@@ -1,11 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:outputLabel value="Hello, world"/>
-</f:view>
+<link href="css/bootstrap.css" rel="stylesheet"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="css/main.css"/>
+<link href="css/custom.css" rel="stylesheet"/>
+<link rel="stylesheet" href="css/font-awesome.min.css"/>
+<link rel="stylesheet" href="css/searchAlbum.css" />
+
+<script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script
+        src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<body style="background-color: yellowgreen">
+<div class ="container" style="background-color:yellowgreen;margin: 0;width: 100%;height: 100%;">
+    <header class="navbar navbar-inverse navbar-fixed-top" style="padding: 0;">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="home.xhtml" style="position:relative;margin-top:0;top: 0">
+                    <img  style="position:relative;top:0;margin-top: 0;height:70px;width: 300px" src="img/deep-web-logo.jpg"
+                          alt="logo"/></a>
+            </div>
+            <div class="collapse navbar-collapse" style="padding: 20px;">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="home.xhtml">Home</a></li>
+                    <li><a href="searchAlbum.xhtml">Search Album</a></li>
+                    <li class="active"><a href="checkCompatibility.xhtml">Check Compatibility</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" style="background-color: lightyellow;margin-top:150px;width: 40%;height: 100%;padding:20px;">
+        <h2> Failure!</h2>
+        <p> The query inserted is not compatible with the schema formed by the relations created</p>
+        <p> Click the Check Compatibility button on the navigation bar to make another test.</p>
+    </div>
+</div>
+<div class="footer" style="position: absolute;bottom: 0;width: 100%">
+    <div class="container">
+        <div class="row">
+            <div class="col-footer col-md-4 col-xs-6">
+                <h3>Contact Me</h3>
+                <p class="contact-us-details">
+                    <b>Email:</b>
+                    <a href="mailto:davide.dimaria07@gmail.com">davide.dimaria07@gmail.com</a>
+                </p>
+            </div>
+            <div class="col-footer col-md-4 col-xs-6">
+                <h3>My Social Networks</h3>
+                <p> You can contact me through social networks like Facebook or Twitter</p>
+                <div>
+                    <img src="img/icons/facebook.png" width="32" alt="Facebook" />
+                    <img src="img/icons/twitter.png" width="32" alt="Twitter"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
 </html>

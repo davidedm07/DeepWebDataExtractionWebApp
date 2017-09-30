@@ -11,7 +11,6 @@
 <link href="css/custom.css" rel="stylesheet"/>
 <link rel="stylesheet" href="css/font-awesome.min.css"/>
 <link rel="stylesheet" href="css/searchAlbum.css" />
-<link rel="stylesheet" href="css/attributes.css"/>
 
 <script
         src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -40,13 +39,14 @@
     <div class="container" style="background-color: lightyellow;margin-top:150px;width: 40%;height: 100%;padding:10px;">
         <f:view>
             <h:form>
+                <h2 style="color:darkblue"> The compatibility check needs at least one Relation</h2>
                 <h2 style="color:darkblue">Add a relation in the Schema for the compatibility check</h2>
                 <h3 style="color:darkblue"> You need to add the name and the attributes of the relation </h3>
                 <h4 style="color:darkblue"> Enter the name of the relation</h4>
-                <h:inputText styleClass="inputTextAttr" value="#{dWDataExtractionController.relationName}" id="relationName"
+                <h:inputText styleClass="inputText" style="width: 60%;height: 40px" value="#{dWDataExtractionController.relationName}" id="relationName"
                 required="true" requiredMessage="Relation's name is mandatory" />
                 <h:message style="color:red" for="relationName"/>
-                <h:button value="Insert Attributes" style="margin-top:20px;margin-right: 50%" styleClass="button"  outcome="attributes.xhtml"/>
+                <h:commandButton value="Insert Attributes" style="margin-top:20px;margin-right: 50%" styleClass="button"  action="#{dWDataExtractionController.insertAttributes}"/>
                 <h:commandButton value="createRelation"  styleClass="button"  action="#{dWDataExtractionController.createRelation}"/>
                 <br/>
                 <br/>

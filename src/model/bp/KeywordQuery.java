@@ -62,6 +62,14 @@ public class KeywordQuery extends Query {
         this.attributeList = attributeList;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String toString() {
         return "Name: " + this.name + "\nAttributes: " + this.attributeList.toString();
     }

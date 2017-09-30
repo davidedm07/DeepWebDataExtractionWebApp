@@ -42,23 +42,25 @@
             <h:form>
                 <h2 style="color:darkblue">Add an attribute to the current Relation</h2>
                 <h3 style="color:darkblue"> You need to add the name, domain and the access limitation of the attribute  </h3>
-                <h4 style="color:darkblue;margin-top: 20px">Value</h4>
-                <h:inputText styleClass="inputTextAttr" value="#{dWDataExtractionController.attributeValue}" id="attributeValue"
-                             required="true" requiredMessage="Attribute's value is mandatory"/>
-                <h:message style="color:red" for="attributeValue"/>
-                <h4 style="color:darkblue">Domain</h4>
-                <h:inputText styleClass="inputTextAttr" value="#{dWDataExtractionController.attributeDomain}" id="attributeDomain"
-                             required="true" requiredMessage="Attribute's domain is mandatory"/>
-                <h:message style="color:red" for="attributeDomain"/>
-                <h4 style="color:darkblue">Access Limitation</h4>
-                <h:selectOneRadio enabledClass="radio-inline" disabledClass="radio-inline" style="font-size:14pt;color:darkblue;margin-bottom: 20px;" value="#{dWDataExtractionController.accessLimitation}">
-                    <f:selectItem itemValue="Free" itemLabel="Free" />
-                    <f:selectItem itemValue="Bound" itemLabel="Bound" />
-                </h:selectOneRadio>
-                <h:commandButton value="createAttribute"  styleClass="button"  action="#{dWDataExtractionController.createAttribute}"/>
-                <br/>
-                <br/>
-                <br/>
+                <div class="col-sm-offset-2 col-sm-10">
+                    <h4 style="color:darkblue;margin-top: 20px">Value</h4>
+                    <h:inputText  style="width: 60%;height: 40px" styleClass="inputText" value="#{dWDataExtractionController.attributeValue}" id="attributeValue"
+                                 required="true" requiredMessage="Attribute's value is mandatory"/>
+                    <h:message style="color:red" for="attributeValue"/>
+                    <h4 style="color:darkblue">Domain</h4>
+                    <h:inputText style="width: 60%;height: 40px" styleClass="inputText" value="#{dWDataExtractionController.attributeDomain}" id="attributeDomain"
+                                 required="true" requiredMessage="Attribute's domain is mandatory"/>
+                    <h:message style="color:red" for="attributeDomain"/>
+                    <h4 style="color:darkblue">Access Limitation</h4>
+                    <h:selectOneRadio enabledClass="radio-inline" disabledClass="radio-inline" style="font-size:14pt;color:darkblue;margin-bottom: 20px;" value="#{dWDataExtractionController.accessLimitation}">
+                        <f:selectItem itemValue="Free" itemLabel="Free" />
+                        <f:selectItem itemValue="Bound" itemLabel="Bound" />
+                    </h:selectOneRadio>
+                    <h:commandButton value="createAttribute" styleClass="button"  action="#{dWDataExtractionController.createAttribute}"/>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
             </h:form>
         </f:view>
     </div>

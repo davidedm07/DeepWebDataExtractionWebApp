@@ -1,9 +1,7 @@
 package controller;
 
 import model.Album;
-import model.bp.Attribute;
-import model.bp.KeywordQuery;
-import model.bp.Relation;
+import model.bp.*;
 import model.sources.Avax;
 import model.sources.InternetArchive;
 
@@ -37,6 +35,7 @@ public class DWDataExtractionController {
 	private String attributeValue;
 	private String attributeDomain;
 	private String accessLimitation;
+	private String queryString;
 
 	public String searchAlbum() throws IOException {
 		Avax albumSource = new Avax();
@@ -77,10 +76,54 @@ public class DWDataExtractionController {
 		return "links?faces-redirect=true";
 	}
 
-	public String checkCompatibility() {
-		return "";
+	// needed only for forcing the user to insert first the name of the relation
+	// and then inserting the attributes
+	public String insertAttributes() {
+		return "attributes?faces-redirect=true";
 	}
 
+	public String modifyRelation(Relation r) {
+		this.currentRelation = r;
+		return "relation?faces-redirect=true";
+	}
+
+	public String deleteRelation(Relation r) {
+		this.relations.remove(r);
+		if (this.currentRelation.equals(r))
+			this.currentRelation =null;
+		return "createdRelations?faces-redirect=true";
+
+	}
+
+	public String deleteAttribute(Attribute a) {
+		this.currentRelation.getAttributes().remove(a);
+		this.relationAttributes.remove(a);
+		return "relation?faces-redirect=true";
+	}
+
+	public String checkCompatibility() {
+		if(this.query==null)
+			return "keywordQuery?faces-redirect=true";
+		else if(this.relations== null || this.relations.size()==0)
+			return "relations?faces-redirect=true";
+		Schema schema = new Schema(this.query.toString() + "\t" + this.currentRelation.toString(),this.relations);
+		boolean isCompatible = DeepWeb.checkCompatibility(this.query,schema);
+		if (isCompatible)
+			return "compatible?faces-redirect=true";
+		else return "notCompatible?faces-redirect=true";
+	}
+
+	public String createKeywordQuery() {
+		String[] queryParts =this.queryString.split(";");
+		String tabString ="";
+		if(queryParts.length==0)
+			return "keywordQueryError";
+		for (int i=0;i<queryParts.length-1;i++)
+			tabString += queryParts[i] +"\t";
+		tabString +=queryParts[queryParts.length-1];
+		this.query = new KeywordQuery(tabString);
+		return "createdQuery?faces-redirect=true";
+	}
 	public String createAttribute() {
 		Attribute.AccessLimitation access=null;
 		if (this.accessLimitation.equals("Free"))
@@ -91,13 +134,17 @@ public class DWDataExtractionController {
 		if(this.relationAttributes==null)
 			this.relationAttributes= new ArrayList<>();
 		this.relationAttributes.add(this.currentAttribute);
-		return "attributes?faces-redirect=true";
+		return "attribute?faces-redirect=true";
 	}
 
 	public String createRelation() {
 		if(this.relationName.equals("") || this.relationAttributes==null || this.relationAttributes.size()==0)
 			return "relationError";
 		this.currentRelation= new Relation(this.relationName,this.relationAttributes);
+		if(this.relations== null)
+			this.relations= new ArrayList<>();
+		this.relations.add(currentRelation);
+		this.relationAttributes = new ArrayList<>();
 		return "relation?faces-redirect=true";
 	}
 
@@ -236,5 +283,13 @@ public class DWDataExtractionController {
 
 	public void setAccessLimitation(String accessLimitation) {
 		this.accessLimitation = accessLimitation;
+	}
+
+	public String getQueryString() {
+		return queryString;
+	}
+
+	public void setQueryString(String queryString) {
+		this.queryString = queryString;
 	}
 }
