@@ -53,8 +53,8 @@
                     <h:message style="color:red" for="attributeDomain"/>
                     <h4 style="color:darkblue">Access Limitation</h4>
                     <h:selectOneRadio enabledClass="radio-inline" disabledClass="radio-inline" style="font-size:14pt;color:darkblue;margin-bottom: 20px;" value="#{dWDataExtractionController.accessLimitation}">
-                        <f:selectItem itemValue="Free" itemLabel="Free" />
-                        <f:selectItem itemValue="Bound" itemLabel="Bound" />
+                        <f:selectItem itemValue="Input" itemLabel="Input" />
+                        <f:selectItem itemValue="Output" itemLabel="Output" />
                     </h:selectOneRadio>
                     <h:commandButton value="createAttribute" styleClass="button"  action="#{dWDataExtractionController.createAttribute}"/>
                     <br/>

@@ -1,5 +1,6 @@
 package model.bp;
 
+
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -30,6 +31,12 @@ public class Node implements Comparable<Node> {
 		this.relation=r;
 	}
 
+	public Node(String id, Relation r, Attribute a) {
+		this.id = id;
+		this.relation = r;
+		this.attribute = a;
+	}
+
 	public Node(String id) {
 		this.id = id;
 		this.color = Color.WHITE;
@@ -51,9 +58,11 @@ public class Node implements Comparable<Node> {
 	}
 
 	public String toString() {
+		if (attribute!=null && color!=null)
+			return id + "/" +(isBlack() ? "Output" : "Input");
+		else if (attribute!=null)
+			return id + "/" +(attribute.isInput() ? "Input" : "Output");
 		return id;
-//		if (attribute!=null)
-//			return id + (attribute.isBound() ? "b" : "f") + (isBlack() ? "B" : "W") + "(" + atom.getName() + ":" + (position+1) +")";
 //		return id + "(" + atom.getName() + ":" + (position+1) +")";
 	}
 
@@ -167,5 +176,13 @@ public class Node implements Comparable<Node> {
 
 	public void setRelation(Relation relation) {
 		this.relation = relation;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 }

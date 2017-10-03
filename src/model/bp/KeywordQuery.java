@@ -34,7 +34,7 @@ public class KeywordQuery extends Query {
                 else {
                     String attributeName = attributeInfo[0];
                     String domain = attributeInfo[1];
-                    Attribute current = new Attribute(attributeName,domain, Attribute.AccessLimitation.FREE);
+                    Attribute current = new Attribute(attributeName,domain, Attribute.AccessLimitation.OUTPUT);
                     this.attributeList.add(current);
                 }
             }

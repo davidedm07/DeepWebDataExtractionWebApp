@@ -38,6 +38,10 @@
         <h2> Success!</h2>
         <p> The query inserted is compatible with the schema formed by the relations created</p>
         <p> Click the Check Compatibility button on the navigation bar to make another test.</p>
+        <p> Click the Check Answerable button to check if the query is answerable with the current schema</p>
+        <h:form>
+            <h:commandButton styleClass="button" value="Check Answerability" action="#{dWDataExtractionController.checkAnswerability}"/>
+        </h:form>
     </div>
 </div>
 <div class="footer" style="position: absolute;bottom: 0;width: 100%">

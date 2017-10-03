@@ -1,7 +1,7 @@
 package model.bp;
 
+
 import java.util.*;
-import java.util.logging.Logger;
 
 /*
  * + Read source schema, e.g.: sa(A);s1(A-b,B);s2(A,B-b);
@@ -14,6 +14,151 @@ import java.util.logging.Logger;
  */
 
 public class DependencyGraph {
+
+	private List<Node> nodes;
+	private Map<String,Node> nodesMap;
+	private List<Arc> arcs;
+	private Map<String,Arc> arcsMap;
+	private Schema extendedSchema;
+	private Map<Node,List<Node>> nodeDestinations;
+
+
+	 public DependencyGraph(Schema s,KeywordQuery q) {
+	 	this.extendedSchema = s.getExtendedSchema(q);
+	 	this.nodes = new ArrayList<>();
+	 	this.arcs = new ArrayList<>();
+	 	this.nodesMap = new HashMap<>();
+	 	this.arcsMap = new HashMap<>();
+	 	this.nodeDestinations = new HashMap<>();
+	 	addNodes();
+	 	addArcs();
+
+	 }
+	// White Nodes = input Nodes
+	// Black Nodes = output Nodes
+	 public void addNodes() {
+	 	for(Relation r:this.extendedSchema.getRelations()) {
+	 		for(Attribute a:r.getAttributes()) {
+	 			Node n = new Node(a.getName()+":"+a.getDomain(),r,a);
+	 			if(a.getAccessLimitation().equals(Attribute.AccessLimitation.INPUT))
+	 				n.setColor(Node.Color.WHITE);
+	 			else n.setColor(Node.Color.BLACK);
+	 			this.nodes.add(n);
+	 			this.nodeDestinations.put(n,new ArrayList<>());
+	 			this.nodesMap.put(n.getId()+":"+n.getRelation().getName(),n);
+			}
+		}
+	 }
+
+	 public void addArcs() {
+	 	for(int i=0; i<this.nodes.size()-1;i++) {
+	 		Node n1 = this.nodes.get(i);
+	 		String n1Domain = n1.getId().split(":")[1];
+	 		String n1MapKey;
+			String n2MapKey;
+	 		for (int j=i+1;j<this.nodes.size();j++) {
+	 			Arc arc;
+				Node n2 = this.nodes.get(j);
+				String n2Domain = n2.getId().split(":")[1];
+				if(n1Domain.equals(n2Domain)) {
+					n1MapKey = n1.getId() + ":" + n1.getRelation().getName();
+					n2MapKey = n2.getId() + ":" + n2.getRelation().getName();
+					if(n1.getColor()==Node.Color.WHITE && n2.getColor()==Node.Color.BLACK) {
+						arc = new Arc(n2, n1);
+						this.arcs.add(arc);
+						this.arcsMap.put("("+ n2MapKey + "," + n1MapKey +")",arc);
+						this.nodeDestinations.get(n2).add(n1);
+					}
+					else if(n1.getColor()==Node.Color.BLACK && n2.getColor()==Node.Color.WHITE) {
+						arc = new Arc(n1, n2);
+						this.arcs.add(arc);
+						this.arcsMap.put("("+ n1MapKey + "," + n2MapKey +")",arc);
+						this.nodeDestinations.get(n1).add(n2);
+					}
+				}
+			}
+		}
+
+	 }
+
+	 public boolean checkVisibility(Node inputNode) {
+	 	boolean visible = false;
+	 	if(inputNode.getColor()!= Node.Color.WHITE) {
+	 		System.out.println("Error: the node passed to the method is not an input node");
+			return false;
+		}
+	 	for(Node n:this.nodes) {
+	 		if(this.extendedSchema.getUnaryRelations().contains(n.getRelation()))
+	 			visible = checkVisibility(n,inputNode,true);
+	 		if(visible)
+	 			return true;
+		}
+		return false;
+	 }
+
+
+	 private boolean checkVisibility(Node n1,Node n2,boolean isSource) {
+		if (n1.getAttribute().getAccessLimitation()== Attribute.AccessLimitation.INPUT && isSource)
+			return false;
+	 	String n1MapKey = n1.getId() + ":" + n1.getRelation().getName();
+	 	String n2MapKey = n2.getId() + ":" + n2.getRelation().getName();
+	 	if (this.arcsMap.containsKey("("+ n1MapKey + "," + n2MapKey +")"))
+	 		return true;
+		else
+			for(Node n:this.nodeDestinations.get(n1)) {
+				boolean visible =false;
+				if (isSource)
+					visible = checkVisibility(n,n2,false);
+				else if(n1.getRelation().equals(n.getRelation()))
+					visible = checkVisibility(n,n2,false);
+				if (visible)
+					return true;
+
+			}
+			return false;
+
+	 }
+
+
+
+	public List<Node> getNodes() {
+		return nodes;
+	}
+
+	public void setNodes(List<Node> nodes) {
+		this.nodes = nodes;
+	}
+
+	public List<Arc> getArcs() {
+		return arcs;
+	}
+
+	public void setArcs(List<Arc> arcs) {
+		this.arcs = arcs;
+	}
+
+	public Map<String, Node> getNodesMap() {
+		return nodesMap;
+	}
+
+	public void setNodesMap(Map<String, Node> nodesMap) {
+		this.nodesMap = nodesMap;
+	}
+
+	public Map<String, Arc> getArcsMap() {
+		return arcsMap;
+	}
+
+	public void setArcsMap(Map<String, Arc> arcsMap) {
+		this.arcsMap = arcsMap;
+	}
+
+	public String toString() {
+	 	return "Dependency Graph:\n" + "Nodes: " + this.nodes.toString() + "\nArcs: " + this.arcs.toString() +"\n";
+	}
+}
+
+	/*
 
 	static final Logger logger = LoggerFactory.getLogger();
 
@@ -629,3 +774,4 @@ public class DependencyGraph {
 	}
 
 }
+*/

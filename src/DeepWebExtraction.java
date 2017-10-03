@@ -35,24 +35,26 @@ public class DeepWebExtraction {
 			e.printStackTrace();
 		}
 		*/
-		/*
+
 		List<Attribute> r1Attributes = new ArrayList<>();
-		Attribute name = new Attribute("Name", "Person",Attribute.AccessLimitation.FREE);
-		Attribute age = new Attribute("Age","Number",Attribute.AccessLimitation.BOUND);
+		Attribute name = new Attribute("Name", "Person",Attribute.AccessLimitation.INPUT);
+		Attribute age = new Attribute("Age","Number",Attribute.AccessLimitation.OUTPUT);
 		r1Attributes.add(name);
 		r1Attributes.add(age);
 		Relation r1 = new Relation("Actor",r1Attributes);
 
 		List<Attribute> r2Attributes = new ArrayList<>();
-		Attribute wife = new Attribute("Wife", "Person",Attribute.AccessLimitation.FREE);
-		Attribute husband = new Attribute("Husband", "Person",Attribute.AccessLimitation.BOUND);
+		Attribute wife = new Attribute("Wife", "Person",Attribute.AccessLimitation.INPUT);
+		Attribute husband = new Attribute("Husband", "Person",Attribute.AccessLimitation.OUTPUT);
+		Attribute ring = new Attribute("Ring","Object", Attribute.AccessLimitation.INPUT);
 		r2Attributes.add(wife);
 		r2Attributes.add(husband);
+		//r2Attributes.add(ring);
 		Relation r2 = new Relation("WifeOf",r2Attributes);
 		//System.out.println(r1.hasSimilarDomains(r2));
 		List<Attribute> r3Attributes = new ArrayList<>();
 		r3Attributes.add(age);
-		Attribute year = new Attribute("year","Number", Attribute.AccessLimitation.BOUND);
+		Attribute year = new Attribute("year","Number", Attribute.AccessLimitation.OUTPUT);
 		r3Attributes.add(year);
 		//r3Attributes.add(husband);
 		Relation r3 = new Relation("year",r3Attributes);
@@ -62,23 +64,16 @@ public class DeepWebExtraction {
 		relations.add(r3);
 		Schema schema = new Schema("Test",relations);
 		//System.out.println(schema.getDescription());
-		KeywordQuery query = new KeywordQuery("testQueryString\tValerio:Person\tLucky:Dog");
+		KeywordQuery query = new KeywordQuery("testQueryString\tActor:Person\tOscar:Number");
 		//System.out.println(query.toString());
-		System.out.println(DeepWeb.checkCompatibility(query,schema));
-		//SchemaJoinGraph sj = new SchemaJoinGraph(relations);
+		//System.out.println(DeepWeb.checkCompatibility(query,schema));
+		SchemaJoinGraph sj = new SchemaJoinGraph(relations);
 		//System.out.println(sj.toString());
-		*/
-		String queryString = "Test;Leo Messi:Person;Camp nou:Place";
-		String[] queryParts =queryString.split(";");
-		String tabString ="";
-		if(queryParts.length==0)
-			System.out.println("error");
-		for (int i=0;i<queryParts.length-1;i++) {
-			tabString += queryParts[i] + "\t";
-		}
-		tabString +=queryParts[queryParts.length-1];
-		System.out.println(tabString);
-		KeywordQuery query = new KeywordQuery(tabString);
+		DependencyGraph dgr = new DependencyGraph(schema,query);
+		//System.out.println(dgr.toString());
+		System.out.println(DeepWeb.checkAnswerability(schema,query));
+
+
 	}
 
 }

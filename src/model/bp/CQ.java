@@ -3,6 +3,8 @@ package model.bp;
 import java.util.*;
 import java.util.logging.Logger;
 
+import model.bp.Attribute.AccessLimitation;
+
 public class CQ extends Query {
 	static final Logger logger = LoggerFactory.getLogger();
 	Atom head;
@@ -144,7 +146,7 @@ public class CQ extends Query {
 							sourceName = "newRel" + sourceCounter++;
 							Attribute a = new Attribute(atom.getAttribute(
 									schemata, termPosition).getName(),
-									Attribute.AccessLimitation.FREE);
+									AccessLimitation.FREE);
 							Schema s = new NewSchema(sourceName,
 									new Attribute[] { a });
 							schemata.add(s);

@@ -36,6 +36,7 @@ public class DWDataExtractionController {
 	private String attributeDomain;
 	private String accessLimitation;
 	private String queryString;
+	private Schema schema;
 
 	public String searchAlbum() throws IOException {
 		Avax albumSource = new Avax();
@@ -106,11 +107,20 @@ public class DWDataExtractionController {
 			return "keywordQuery?faces-redirect=true";
 		else if(this.relations== null || this.relations.size()==0)
 			return "relations?faces-redirect=true";
-		Schema schema = new Schema(this.query.toString() + "\t" + this.currentRelation.toString(),this.relations);
+		this.schema = new Schema(this.query.toString() + "\t" + this.relations.toString(),this.relations);
 		boolean isCompatible = DeepWeb.checkCompatibility(this.query,schema);
 		if (isCompatible)
 			return "compatible?faces-redirect=true";
 		else return "notCompatible?faces-redirect=true";
+	}
+
+	public String checkAnswerability() {
+		//Schema schema = new Schema(this.query.toString() + "\t" + this.relations.toString(),this.relations);
+		boolean isAnswerable = DeepWeb.checkAnswerability(this.schema,this.query);
+		if (isAnswerable)
+			return "answerable?faces-redirect=true";
+		else return "notAnswerable?faces-redirect=true";
+
 	}
 
 	public String createKeywordQuery() {
@@ -126,10 +136,10 @@ public class DWDataExtractionController {
 	}
 	public String createAttribute() {
 		Attribute.AccessLimitation access=null;
-		if (this.accessLimitation.equals("Free"))
-			access = Attribute.AccessLimitation.FREE;
-		else if(this.accessLimitation.equals("Bound"))
-			access = Attribute.AccessLimitation.BOUND;
+		if (this.accessLimitation.equals("Input"))
+			access = Attribute.AccessLimitation.INPUT;
+		else if(this.accessLimitation.equals("Output"))
+			access = Attribute.AccessLimitation.OUTPUT;
 		this.currentAttribute = new Attribute(this.attributeValue,this.attributeDomain,access);
 		if(this.relationAttributes==null)
 			this.relationAttributes= new ArrayList<>();

@@ -10,6 +10,7 @@ public class Schema implements Comparable<Schema> {
 	private String name;
 	private List<Relation> relations;
 	private Attribute[] attributes;
+	private List<Relation> unaryRelations;
 	protected boolean fake = false;
 
 	public Schema(String name, List<Relation> relations) {
@@ -70,6 +71,23 @@ public class Schema implements Comparable<Schema> {
 		}
 		return true;
 	}
+	// return the extended schema linked to a particular keyword query
+	public Schema getExtendedSchema(KeywordQuery q) {
+		List<Relation> expandedSchemaRelation = new ArrayList<>();
+		expandedSchemaRelation.addAll(this.relations);
+		this.unaryRelations = new ArrayList<>();
+		for(Attribute a:q.getAttributeList()) {
+			a.setAccessLimitation(Attribute.AccessLimitation.OUTPUT);
+			List<Attribute> unaryRelationAttributes = new ArrayList<>();
+			unaryRelationAttributes.add(a);
+			Relation unaryRelation = new Relation(a.getName(),unaryRelationAttributes);
+			this.unaryRelations.add(unaryRelation);
+			expandedSchemaRelation.add(unaryRelation);
+		}
+		Schema result =new Schema("Expanded Schema",expandedSchemaRelation);
+		result.setUnaryRelations(this.unaryRelations);
+		return result;
+	}
 
 	public Map<String,List<Attribute>> getDomainsMap() {
 		Map<String,List<Attribute>> result = new HashMap<>();
@@ -116,5 +134,13 @@ public class Schema implements Comparable<Schema> {
 
 	public void setRelations(List<Relation> relations) {
 		this.relations = relations;
+	}
+
+	public List<Relation> getUnaryRelations() {
+		return unaryRelations;
+	}
+
+	public void setUnaryRelations(List<Relation> unaryRelations) {
+		this.unaryRelations = unaryRelations;
 	}
 }

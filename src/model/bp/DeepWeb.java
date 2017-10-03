@@ -50,4 +50,36 @@ public class DeepWeb {
         return true;
 
     }
+
+    public static boolean checkAnswerability(Schema s,KeywordQuery q) {
+        DependencyGraph dg  = new DependencyGraph(s,q);
+        List<Relation> visibleRelations = getAllVisibleRelations(s,dg);
+        Schema subset = new Schema("subset of schema s: only visible relations",visibleRelations);
+        return checkCompatibility(q,subset);
+    }
+
+    public static List<Relation> getAllVisibleRelations(Schema s,DependencyGraph dg) {
+        List<Relation> visibleRelations = new ArrayList<>();
+        for (Relation r:s.getRelations())
+            if(isRelationVisible(r,dg))
+                visibleRelations.add(r);
+        return visibleRelations;
+    }
+
+    public static boolean isRelationVisible(Relation r,DependencyGraph dg) {
+        String nodeID;
+        boolean attrVisible;
+        boolean inputPresent = false; // at least one input attribute present
+        for(Attribute a:r.getAttributes()) {
+            nodeID = a.getName() + ":" + a.getDomain() + ":" + r.getName();
+            if (a.getAccessLimitation() == Attribute.AccessLimitation.INPUT) {
+                inputPresent = true;
+                attrVisible = dg.checkVisibility(dg.getNodesMap().get(nodeID));
+                if(!attrVisible)
+                    return false;
+            }
+        }
+        return inputPresent;
+
+    }
 }

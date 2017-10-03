@@ -7,7 +7,7 @@ public class Attribute {
 	private String domain;
 	
 	public enum AccessLimitation {
-		BOUND, FREE
+		BOUND, FREE,INPUT,OUTPUT
 	}
 
 	public Attribute(String name,String domain, AccessLimitation accessLimitation) {
@@ -46,11 +46,12 @@ public class Attribute {
 	public boolean isBound() {
 		return accessLimitation == AccessLimitation.BOUND;
 	}
+	public boolean isInput() {return accessLimitation == AccessLimitation.INPUT;}
 
 	public String toString() {
 		if (this.domain==null)
-			return name +":Unknown"+ "/" + (accessLimitation == AccessLimitation.FREE ? "f" : "b");
-		return name +":"+ this.domain + "/" + (accessLimitation == AccessLimitation.FREE ? "f" : "b");
+			return name +":Unknown"+ "/" + (accessLimitation == AccessLimitation.INPUT ? "Input" : "Output" );
+		return name +":"+ this.domain + "/" + (accessLimitation == AccessLimitation.INPUT ? "Input" : "Output");
 	}
 
 	public boolean equals(Object o) {

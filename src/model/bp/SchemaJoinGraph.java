@@ -86,6 +86,7 @@ public class SchemaJoinGraph {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
+        sb.append("Schema Join Graph");
         sb.append("\nNodes: " + this.nodes.toString());
         sb.append("\nArcs: " + this.arcs.toString());
         return sb.toString();
