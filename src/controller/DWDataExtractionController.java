@@ -147,6 +147,17 @@ public class DWDataExtractionController {
 		return "attribute?faces-redirect=true";
 	}
 
+	public String addAttribute() {
+		Attribute.AccessLimitation access=null;
+		if (this.accessLimitation.equals("Input"))
+			access = Attribute.AccessLimitation.INPUT;
+		else if(this.accessLimitation.equals("Output"))
+			access = Attribute.AccessLimitation.OUTPUT;
+		this.currentAttribute = new Attribute(this.attributeValue,this.attributeDomain,access);
+		this.currentRelation.getAttributes().add(this.currentAttribute);
+		return "relation?faces-redirect=true";
+	}
+
 	public String createRelation() {
 		if(this.relationName.equals("") || this.relationAttributes==null || this.relationAttributes.size()==0)
 			return "relationError";

@@ -71,9 +71,11 @@
                         </c:forEach>
                         </tbody>
                     </table>
-                    <h3 style="color: darkblue">To add another relation click the Add Relation button in the navigation bar</h3>
-                    <h3 style="color: darkblue">To see all the created relations click the Created Relations button in the navigation bar</h3>
                     <h:form>
+                        <h:button  styleClass="button" style="margin-top: 20px;margin-bottom: 20px" value="Add an Attribute" outcome="addAttribute.xhtml"/>
+                        <h3 style="color: darkblue">To add another relation click the Add Relation button in the navigation bar</h3>
+                        <h3 style="color: darkblue">To see all the created relations click the Created Relations button in the navigation bar</h3>
+
                         <h:commandButton style="margin-top: 20px" value="Check Compatibility"  styleClass="button"  action="#{dWDataExtractionController.checkCompatibility}"/>
                     </h:form>
                 </div>
