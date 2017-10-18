@@ -14,7 +14,7 @@ public class DeepWebExtraction {
 	public static void main(String[] args) {
 		InternetArchive source1 = new InternetArchive("https://archive.org");
 		Avax source2 = new Avax("http://avaxhome5lcpcok5.onion/");
-		/*
+
 		try { 
 			String artist = "linkin park";
 			String albumName = "meteora";
@@ -34,8 +34,8 @@ public class DeepWebExtraction {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		*/
 
+		/*
 		List<Attribute> r1Attributes = new ArrayList<>();
 		Attribute name = new Attribute("Name", "Person",Attribute.AccessLimitation.INPUT);
 		Attribute age = new Attribute("Age","Number",Attribute.AccessLimitation.OUTPUT);
@@ -72,7 +72,7 @@ public class DeepWebExtraction {
 		DependencyGraph dgr = new DependencyGraph(schema,query);
 		//System.out.println(dgr.toString());
 		System.out.println(DeepWeb.checkAnswerability(schema,query));
-
+*/
 
 	}
 
