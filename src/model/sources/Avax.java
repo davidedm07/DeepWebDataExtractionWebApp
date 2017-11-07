@@ -17,11 +17,12 @@ public class Avax extends Source {
 
 
 	public Avax() {
-		super("http://avaxhome5lcpcok5.onion/");
+		super("Avax","http://avaxhome5lcpcok5.onion/");
 	}
 
 	public Avax(String url) {
-		super(url);
+		super("Avax",url);
+		super.setSchemaDescription("AVAX\nAttributes:\nAlbumTitle:Input, Artist:Input,Album:Output");
 		// TODO Auto-generated constructor stub
 	}
 

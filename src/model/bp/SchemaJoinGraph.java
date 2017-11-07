@@ -8,12 +8,16 @@ public class SchemaJoinGraph {
     private Map<String,Node> nodesMap;
     private List<Arc> arcs;
     private Map<String,Arc> arcsMap;
+    private Map<Node,List<Node>> nodeDestinations;
+    private Map<Node,List<String>> nodeArcs;
 
     public SchemaJoinGraph(List<Relation> relations) {
         this.nodes = new ArrayList<>();
         this.arcs = new ArrayList<>();
         this.nodesMap = new HashMap<>();
         this.arcsMap = new HashMap<>();
+        this.nodeDestinations = new HashMap<>();
+        this.nodeArcs = new HashMap<>();
         addNodes(relations);
         addArcs();
 
@@ -24,6 +28,8 @@ public class SchemaJoinGraph {
         this.arcs = new ArrayList<>();
         this.nodesMap = new HashMap<>();
         this.arcsMap = new HashMap<>();
+        this.nodeDestinations = new HashMap<>();
+        this.nodeArcs = new HashMap<>();
         addNodes(s.getRelations());
         addArcs();
     }
@@ -35,6 +41,8 @@ public class SchemaJoinGraph {
                 Node n = new Node(r.getName(), r);
                 this.nodes.add(n);
                 this.nodesMap.put(r.getName(),n);
+                this.nodeDestinations.put(n,new ArrayList<>());
+                this.nodeArcs.put(n,new ArrayList<>());
             }
     }
 
@@ -48,8 +56,14 @@ public class SchemaJoinGraph {
                     Arc reverse = new Arc(destination,source);
                     this.arcs.add(direct);
                     this.arcs.add(reverse);
-                    this.arcsMap.put("(" + source.getId()+","+destination.getId()+")",direct);
-                    this.arcsMap.put("(" + destination.getId()+","+source.getId()+")",reverse);
+                    this.nodeDestinations.get(source).add(destination);
+                    this.nodeDestinations.get(destination).add(source);
+                    String directArc = "(" + source.getId()+","+destination.getId()+")";
+                    String reverseArc = "(" + destination.getId()+","+source.getId()+")";
+                    this.arcsMap.put(directArc,direct);
+                    this.arcsMap.put(reverseArc,reverse);
+                    this.nodeArcs.get(source).add(directArc);
+                    this.nodeArcs.get(destination).add(reverseArc);
                 }
 
             }
@@ -81,6 +95,9 @@ public class SchemaJoinGraph {
         this.name = name;
     }
 
+    public boolean isPresent(Node n) {
+        return this.nodesMap.containsKey(n.getRelation().getName());
+    }
 
 
     @Override
@@ -106,5 +123,21 @@ public class SchemaJoinGraph {
 
     public void setArcsMap(Map<String, Arc> arcsMap) {
         this.arcsMap = arcsMap;
+    }
+
+    public Map<Node, List<Node>> getNodeDestinations() {
+        return nodeDestinations;
+    }
+
+    public void setNodeDestinations(Map<Node, List<Node>> nodeDestinations) {
+        this.nodeDestinations = nodeDestinations;
+    }
+
+    public Map<Node, List<String>> getNodeArcs() {
+        return nodeArcs;
+    }
+
+    public void setNodeArcs(Map<Node, List<String>> nodeArcs) {
+        this.nodeArcs = nodeArcs;
     }
 }

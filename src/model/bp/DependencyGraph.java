@@ -21,6 +21,7 @@ public class DependencyGraph {
 	private Map<String,Arc> arcsMap;
 	private Schema extendedSchema;
 	private Map<Node,List<Node>> nodeDestinations;
+	private Map<Relation,List<Node>> relationNodes;
 
 
 	 public DependencyGraph(Schema s,KeywordQuery q) {
@@ -30,6 +31,7 @@ public class DependencyGraph {
 	 	this.nodesMap = new HashMap<>();
 	 	this.arcsMap = new HashMap<>();
 	 	this.nodeDestinations = new HashMap<>();
+	 	this.relationNodes = new HashMap<>();
 	 	addNodes();
 	 	addArcs();
 
@@ -38,6 +40,7 @@ public class DependencyGraph {
 	// Black Nodes = output Nodes
 	 public void addNodes() {
 	 	for(Relation r:this.extendedSchema.getRelations()) {
+	 		this.relationNodes.put(r,new ArrayList<>());
 	 		for(Attribute a:r.getAttributes()) {
 	 			Node n = new Node(a.getName()+":"+a.getDomain(),r,a);
 	 			if(a.getAccessLimitation().equals(Attribute.AccessLimitation.INPUT))
@@ -46,6 +49,7 @@ public class DependencyGraph {
 	 			this.nodes.add(n);
 	 			this.nodeDestinations.put(n,new ArrayList<>());
 	 			this.nodesMap.put(n.getId()+":"+n.getRelation().getName(),n);
+	 			this.relationNodes.get(r).add(n);
 			}
 		}
 	 }
@@ -87,37 +91,59 @@ public class DependencyGraph {
 	 		System.out.println("Error: the node passed to the method is not an input node");
 			return false;
 		}
+		List<String> visitedArcs = new ArrayList<>();
+	 	//starts the research from a node of an unary relation
+		// that means starting the search from the keyword query
 	 	for(Node n:this.nodes) {
 	 		if(this.extendedSchema.getUnaryRelations().contains(n.getRelation()))
-	 			visible = checkVisibility(n,inputNode,true);
+	 			visible = checkVisibility(n,inputNode,visitedArcs);
 	 		if(visible)
 	 			return true;
 		}
 		return false;
 	 }
 
-
-	 private boolean checkVisibility(Node n1,Node n2,boolean isSource) {
-		if (n1.getAttribute().getAccessLimitation()== Attribute.AccessLimitation.INPUT && isSource)
-			return false;
-	 	String n1MapKey = n1.getId() + ":" + n1.getRelation().getName();
-	 	String n2MapKey = n2.getId() + ":" + n2.getRelation().getName();
-	 	if (this.arcsMap.containsKey("("+ n1MapKey + "," + n2MapKey +")"))
+	 private boolean checkVisibility(Node source, Node destination,List<String> visited) {
+	 	String sourceString = source.getId() + ":" + source.getRelation().getName();
+	 	String destinationString = destination.getId() + ":" + destination.getRelation().getName();
+	 	String possibleArc = "(" + sourceString + "," + destinationString + ")";
+	 	boolean visible;
+	 	if(this.arcsMap.containsKey(possibleArc))
 	 		return true;
-		else
-			for(Node n:this.nodeDestinations.get(n1)) {
-				boolean visible =false;
-				if (isSource)
-					visible = checkVisibility(n,n2,false);
-				else if(n1.getRelation().equals(n.getRelation()))
-					visible = checkVisibility(n,n2,false);
+
+	 	//check all the possible paths deriving from source
+		 for(Node step:this.nodeDestinations.get(source)) {
+		 	String stepString = step.getId() + ":" + step.getRelation().getName();
+		 	String currentArc =  "(" + sourceString + "," + stepString + ")";
+		 	if(!visited.contains(currentArc)) {
+				visited.add(currentArc);
+				visible = checkVisibility(step, destination, visited);
 				if (visible)
 					return true;
-
 			}
-			return false;
+		 }
+		 //if the source is an input node there is the need to check the siblings of the same relation
+		 if(source.getAttribute().getAccessLimitation() == Attribute.AccessLimitation.INPUT) {
+		 	Relation sourceRelation = source.getRelation();
+		 	for (Attribute a: sourceRelation.getAttributes()) {
+		 		if(a.getAccessLimitation() == Attribute.AccessLimitation.OUTPUT) {
+		 			String nextNodeID = a.getName() + ":" + a.getDomain() + ":" + sourceRelation.getName();
+		 			//getting the sibling node
+					Node sibling = this.nodesMap.get(nextNodeID);
+					visible = checkVisibility(sibling,destination,visited);
+					if(visible)
+						return true;
 
+				}
+			}
+
+		 }
+	 	return false;
 	 }
+
+
+
+
 
 
 
@@ -155,6 +181,18 @@ public class DependencyGraph {
 
 	public String toString() {
 	 	return "Dependency Graph:\n" + "Nodes: " + this.nodes.toString() + "\nArcs: " + this.arcs.toString() +"\n";
+	}
+
+	public Map<Node, List<Node>> getNodeDestinations() {
+		return nodeDestinations;
+	}
+
+	public Map<Relation, List<Node>> getRelationNodes() {
+		return relationNodes;
+	}
+
+	public void setRelationNodes(Map<Relation, List<Node>> relationNodes) {
+		this.relationNodes = relationNodes;
 	}
 }
 

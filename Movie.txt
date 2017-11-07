@@ -1,0 +1,4 @@
+Movie
+Actor:Person:Input;Title:Text:Output;Director:Person:Output
+Johnny Depp;Pirates of Caribbean;Coppola
+Tom Hardy;Mad Max;Spielberg

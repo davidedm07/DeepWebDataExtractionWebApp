@@ -1,0 +1,5 @@
+Employee
+Emp:Person:Input;Proj:Project:Output
+John;P1
+Ann;P2
+Mike;P2

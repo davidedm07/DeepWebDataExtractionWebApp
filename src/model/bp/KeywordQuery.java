@@ -2,6 +2,7 @@ package model.bp;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class KeywordQuery extends Query {
@@ -43,6 +44,25 @@ public class KeywordQuery extends Query {
 
 
     }
+
+    public HashMap<String,List<Attribute>> getDomainsMap() {
+        HashMap<String,List<Attribute>> result = new HashMap<>();
+        for(Attribute a:this.attributeList) {
+            String aDomain = a.getDomain();
+            if(result.containsKey(aDomain))
+                result.get(aDomain).add(a);
+            else {
+                List<Attribute> list = new ArrayList<>();
+                list.add(a);
+                result.put(aDomain,list);
+            }
+
+        }
+
+        return result;
+
+    }
+
 
     @Override
     public CQ getCQ() {

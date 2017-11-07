@@ -15,10 +15,13 @@ import com.jaunt.ResponseException;
 import com.jaunt.UserAgent;
 
 public abstract class Source {
-	private String url; 
+	private String url;
+	private String name;
+	private String schemaDescription;
 
-	public Source(String url) {
-		this.setUrl(url);		
+	public Source(String name,String url) {
+		this.name = name;
+		this.setUrl(url);
 	}
 
 	public com.jaunt.Document getJauntDocument() {
@@ -39,7 +42,7 @@ public abstract class Source {
 	public org.jsoup.nodes.Document getJsoupDocument() throws MalformedURLException {
 		SocketAddress sockAddr = new InetSocketAddress("127.0.0.1",8118);
 		Proxy proxy = new Proxy(Proxy.Type.HTTP,sockAddr);
-		URL url = new URL("http://archivecrfip2lpi.onion/");
+		URL url = new URL(this.url);
 		org.jsoup.nodes.Document doc = null;
 		try {
 			InputStreamReader in =new InputStreamReader(url.openConnection(proxy).getInputStream());
@@ -67,7 +70,23 @@ public abstract class Source {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSchemaDescription() {
+		return schemaDescription;
+	}
+
+	public void setSchemaDescription(String schemaDescription) {
+		this.schemaDescription = schemaDescription;
+	}
+
 	abstract public void printQueryResult(String query) throws MalformedURLException;
 
 }

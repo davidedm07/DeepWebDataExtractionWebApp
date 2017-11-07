@@ -22,11 +22,12 @@ public class InternetArchive extends Source{
 	private final String searchForm = "/search.php?query=";
 
 	public InternetArchive() {
-		super("https://archive.org");
+		super("Internet Archive","https://archive.org");
 	}
 
 	public InternetArchive(String url) {
-		super(url);
+		super("Internet Archive",url);
+		super.setSchemaDescription("Internet Archive\nAttributes:\nArtist:Input,SongTitle:Input,MediaLink:Output");
 	}
 
 	/* altro metodo 

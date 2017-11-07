@@ -40,7 +40,7 @@ public class Schema implements Comparable<Schema> {
 	public void setAttributes(Attribute[] attributes) {
 		this.attributes = attributes;
 	}
-
+	/*
 	public String toString() {
 		StringBuffer sb = new StringBuffer(name + "(");
 		int i = 0;
@@ -49,6 +49,10 @@ public class Schema implements Comparable<Schema> {
 			if (i++ < attributes.length - 1) sb.append(",");
 		}
 		return sb.toString() + ")";
+	}
+	*/
+	public String toString() {
+		return this.name + "\t" +this.attributes;
 	}
 
 

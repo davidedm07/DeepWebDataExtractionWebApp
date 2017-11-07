@@ -1,0 +1,4 @@
+Department
+Dept:Department:Input;Emp:Person:Output
+IT;John
+AI;Mike

@@ -1,0 +1,4 @@
+Project
+Proj:Project:Input;Emp:Person:Output;Role:Role:Output
+P1;John;DBA
+P1;Ann;Analyst
