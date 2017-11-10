@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <link href="css/bootstrap.css" rel="stylesheet"/>
@@ -28,10 +27,14 @@
             <div class="collapse navbar-collapse" style="padding: 20px;">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="home.xhtml">Home</a></li>
-                    <li><a href="searchAlbum.xhtml">Search Album</a></li>
-                    <li><a href="checkCompatibility.xhtml">Check Compatibility</a></li>
-                    <li><a href="relations.xhtml">Create Relation</a></li>
-                    <li class="active"><a href="keywordQuery.xhtml">Add Keyword Query</a> </li>
+                    <li>
+                        <f:view>
+                            <h:form style="padding: 15px">
+                                <h:commandLink style="text-align:center;color:white"  value ="Admin Console" action="#{dWDataExtractionController.goToAdminHomepage}"/>
+                            </h:form>
+                        </f:view>
+                    </li>
+                    <li><a href="userKQ.xhtml"> Retrieve Data</a></li>
                 </ul>
             </div>
         </div>
@@ -52,9 +55,9 @@
                     <c:forEach var="relation" items="#{dWDataExtractionController.relations}">
                         <h:form>
                             <tr>
-                                <td><p>${relation.name}</p></td>
+                                <td><p style="color: darkblue">${relation.name}</p></td>
                                 <td>
-                                    <p>${relation.attributes}</p>
+                                    <p style="color: darkblue">${relation.attributes}</p>
                                 </td>
                             </tr>
                         </h:form>
@@ -67,7 +70,7 @@
                 <h:inputText styleClass="inputText" style="width: 70%;height: 40px" value="#{userController.queryString}" id="query"
                              required="true" requiredMessage="query is mandatory" />
                 <h:message style="color:red" for="query"/>
-                <h:commandButton  style="margin-top: 20px;" value="createQuery"  styleClass="button"  action="#{userController.retrieveData}"/>
+                <h:commandButton  style="margin-top: 20px;" value="createQuery"  styleClass="button"  action="#{userController.retrieveData(dWDataExtractionController.relations)}"/>
                 <br/>
                 <br/>
                 <br/>

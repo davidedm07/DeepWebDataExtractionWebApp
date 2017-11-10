@@ -29,7 +29,15 @@
                     <li><a href="home.xhtml">Home</a></li>
                     <li><a href="searchAlbum.xhtml">Search Album</a></li>
                     <li><a href="checkCompatibility.xhtml">Check Compatibility</a></li>
+                    <li><a href="loadRelation.xhtml">Load Relation</a></li>
                     <li class="active"><a href="answerable.xhtml">Check Answerability</a></li>
+                    <li>
+                        <f:view>
+                            <h:form style="padding: 15px;">
+                                <h:commandLink style="color: grey;" value="Logout" action="#{dWDataExtractionController.logout}"/>
+                            </h:form>
+                        </f:view>
+                    </li>
                 </ul>
             </div>
         </div>

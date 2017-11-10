@@ -27,12 +27,10 @@
             </div>
             <div class="collapse navbar-collapse" style="padding: 20px;">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="home.xhtml">Home</a></li>
+                    <li><a href="adminHomepage.xhtml">Home</a></li>
                     <li><a href="searchAlbum.xhtml">Search Album</a></li>
                     <li><a href="checkCompatibility.xhtml">Check Compatibility</a></li>
-                    <li><a href="loadRelation.xhtml">Load Relation</a></li>
-                    <li><a href="relations.xhtml">Create Relation</a></li>
-                    <li class="active"><a href="attributes.xhtml">Add Attribute</a></li>
+                    <li class="active"><a href="loadRelation.xhtml">Load Relation</a></li>
                     <li>
                         <f:view>
                             <h:form style="padding: 15px;">
@@ -48,14 +46,10 @@
     <div class="container" style="background-color: lightyellow;margin-top:150px;width: 40%;height: 100%;padding:10px;">
         <f:view>
             <h:form>
-                <h2 style="color:darkblue">You added with success an attribute to the relation ${dWDataExtractionController.relationName}</h2>
-                <h3 style="color:darkblue"> To add another attribute click the left button or click the right one to end the creation of the relation </h3>
-                <h:button value="Add Attributes" style="margin-top:20px;margin-right: 50%" styleClass="button" outcome="attributes.xhtml"/>
-                <h:commandButton value="createRelation"  styleClass="button"  action="#{dWDataExtractionController.createRelation}"/>
-                <br/>
-                <br/>
-                <br/>
-
+                <h2 style="color:darkblue">Load Relation from File</h2>
+                <h3 style="color:darkblue;"> Enter the name of the file from which you want to load the data from</h3>
+                <h:inputText styleClass="inputText" style="width: 60%;height: 40px" value="#{dWDataExtractionController.filePath}" id="filePath"/>
+                <h:commandButton  styleClass="button" value="Load From File" action="#{dWDataExtractionController.loadRelationFile}"/>
             </h:form>
         </f:view>
     </div>

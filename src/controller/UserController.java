@@ -4,6 +4,7 @@ import model.bp.*;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.util.List;
+import java.util.Map;
 
 
 @ManagedBean
@@ -13,18 +14,26 @@ public class UserController {
     private List<Source> sources;
     private List<Relation> relations;
     private Schema schema;
-    private KeywordQuery q;
     private String queryString;
+    private List<Map<Attribute,String>> result;
 
-    public String retrieveData() {
-        this.q = new KeywordQuery(this.queryString);
-        if(!DeepWeb.checkCompatibility(q,this.schema))
+    public String retrieveData(List<Relation> relations) {
+        String[] queryParts =this.queryString.split(";");
+        String tabString ="";
+        if(queryParts.length==0)
+            return "keywordQueryError";
+        for (int i=0;i<queryParts.length-1;i++)
+            tabString += queryParts[i] +"\t";
+        tabString +=queryParts[queryParts.length-1];
+        this.query = new KeywordQuery(tabString);
+        this.relations = relations;
+        this.schema = new Schema("Schema",this.relations);
+        if(!DeepWeb.checkCompatibility(this.query,this.schema))
             return "notCompatible?faces-redirect=true";
-        if(!DeepWeb.checkAnswerability(this.schema,q))
+        if(!DeepWeb.checkAnswerability(this.schema,query))
             return "notAnswerable?faces-redirect=true";
-
-        //extract data with algorithm
-        return "";
+        this.result = DeepWeb.queryAnswerExtraction(this.query,this.schema);
+        return "result?faces-redirect=true";
 
     }
 
@@ -60,19 +69,19 @@ public class UserController {
         this.schema = schema;
     }
 
-    public KeywordQuery getQ() {
-        return q;
-    }
-
-    public void setQ(KeywordQuery q) {
-        this.q = q;
-    }
-
     public String getQueryString() {
         return queryString;
     }
 
     public void setQueryString(String queryString) {
         this.queryString = queryString;
+    }
+
+    public List<Map<Attribute, String>> getResult() {
+        return result;
+    }
+
+    public void setResult(List<Map<Attribute, String>> result) {
+        this.result = result;
     }
 }

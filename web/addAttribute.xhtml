@@ -32,6 +32,13 @@
                     <li><a href="checkCompatibility.xhtml">Check Compatibility</a></li>
                     <li><a href="relations.xhtml">Create Relation</a></li>
                     <li class="active"><a href="addAttribute.xhtml">Add Attributes</a></li>
+                    <li>
+                        <f:view>
+                            <h:form style="padding: 15px;">
+                                <h:commandLink style="color: grey;" value="Logout" action="#{dWDataExtractionController.logout}"/>
+                            </h:form>
+                        </f:view>
+                    </li>
                 </ul>
             </div>
         </div>

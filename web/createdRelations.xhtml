@@ -31,11 +31,19 @@
             </div>
             <div class="collapse navbar-collapse" style="padding: 20px;">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="home.xhtml">Home</a></li>
+                    <li><a href="adminHomepage.xhtml">Home</a></li>
                     <li><a href="searchAlbum.xhtml">Search Album</a></li>
                     <li><a href="checkCompatibility.xhtml">Check Compatibility</a></li>
+                    <li><a href="loadRelation.xhtml">Load Relation</a></li>
                     <li><a href="relations.xhtml"> Add Relation</a> </li>
                     <li class="active"><a href="createdRelations.xhtml">Created Relations</a></li>
+                    <li>
+                        <f:view>
+                            <h:form style="padding: 15px;">
+                                <h:commandLink style="color: grey;" value="Logout" action="#{dWDataExtractionController.logout}"/>
+                            </h:form>
+                        </f:view>
+                    </li>
                 </ul>
             </div>
         </div>

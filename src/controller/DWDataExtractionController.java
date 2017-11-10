@@ -5,6 +5,7 @@ import model.bp.*;
 import model.sources.Avax;
 import model.sources.InternetArchive;
 
+import javax.faces.application.Application;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 @ManagedBean
@@ -37,6 +39,33 @@ public class DWDataExtractionController {
 	private String accessLimitation;
 	private String queryString;
 	private Schema schema;
+	private String adminUsername;
+	private boolean logged;
+	private String adminPassword;
+	private String filePath="";
+
+	public String goToAdminHomepage() {
+		if(this.logged)
+			return "adminHomepage?faces-redirect=true";
+		return "loginAdmin?faces-redirect=true";
+	}
+
+
+	public String loginAdmin() {
+		if (this.adminUsername.equals("admin") && this.adminPassword.equals("admin")) {
+			this.logged = true;
+			return "adminHomepage?faces-redirect=true";
+		}
+		else
+			return "error?faces-redirect=true";
+	}
+
+
+	public String logout() {
+		this.logged = false;
+		return "home?faces-redirect=true";
+	}
+
 
 	public String searchAlbum() throws IOException {
 		Avax albumSource = new Avax();
@@ -169,6 +198,18 @@ public class DWDataExtractionController {
 		return "relation?faces-redirect=true";
 	}
 
+	public String loadRelationFile() {
+		if(this.filePath.equals(""))
+			return "relationError";
+		if(this.relations== null)
+			this.relations= new ArrayList<>();
+		String contextPath = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("fileDirectory");
+		this.currentRelation = new Relation();
+		this.currentRelation = Relation.createRelation(contextPath+"/"+this.filePath);
+		this.relations.add(currentRelation);
+		return "relation?faces-redirect=true";
+
+	}
 	// GETTER AND SETTER
 	public String getArtist() {
 		return artist;
@@ -187,6 +228,14 @@ public class DWDataExtractionController {
 	public void setAlbumTitle(String albumTitle) {
 
 		this.albumTitle = albumTitle;
+	}
+
+	public Schema getSchema() {
+		return schema;
+	}
+
+	public void setSchema(Schema schema) {
+		this.schema = schema;
 	}
 
 	public Album getAlbum() {
@@ -312,5 +361,29 @@ public class DWDataExtractionController {
 
 	public void setQueryString(String queryString) {
 		this.queryString = queryString;
+	}
+
+	public String getAdminUsername() {
+		return adminUsername;
+	}
+
+	public void setAdminUsername(String adminUsername) {
+		this.adminUsername = adminUsername;
+	}
+
+	public String getAdminPassword() {
+		return adminPassword;
+	}
+
+	public void setAdminPassword(String adminPassword) {
+		this.adminPassword = adminPassword;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 }

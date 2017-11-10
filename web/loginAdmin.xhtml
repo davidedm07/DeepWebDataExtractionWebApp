@@ -2,9 +2,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
 <link href="css/bootstrap.css" rel="stylesheet"/>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"/>
 <link rel="stylesheet" href="css/main.css"/>
@@ -28,34 +26,34 @@
             <div class="collapse navbar-collapse" style="padding: 20px;">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="home.xhtml">Home</a></li>
-                    <li><a href="searchAlbum.xhtml">Search Album</a></li>
-                    <li><a href="checkCompatibility.xhtml">Check Compatibility</a></li>
-                    <li><a href="loadRelation.xhtml">Load Relation</a></li>
-                    <li><a href="relations.xhtml">Create Relation</a></li>
-                    <li class="active"><a href="attributes.xhtml">Add Attribute</a></li>
-                    <li>
-                        <f:view>
-                            <h:form style="padding: 15px;">
-                                <h:commandLink style="color: grey;" value="Logout" action="#{dWDataExtractionController.logout}"/>
-                            </h:form>
-                        </f:view>
-                    </li>
+                    <li class="active"><a href="loginAdmin.xhtml">Admin Login</a></li>
                 </ul>
             </div>
         </div>
     </header>
 
-    <div class="container" style="background-color: lightyellow;margin-top:150px;width: 40%;height: 100%;padding:10px;">
+    <div class="container" style="background-color: lightyellow;margin-top:150px;width: 40%;height: 100%;padding:20px;">
         <f:view>
             <h:form>
-                <h2 style="color:darkblue">You added with success an attribute to the relation ${dWDataExtractionController.relationName}</h2>
-                <h3 style="color:darkblue"> To add another attribute click the left button or click the right one to end the creation of the relation </h3>
-                <h:button value="Add Attributes" style="margin-top:20px;margin-right: 50%" styleClass="button" outcome="attributes.xhtml"/>
-                <h:commandButton value="createRelation"  styleClass="button"  action="#{dWDataExtractionController.createRelation}"/>
-                <br/>
-                <br/>
-                <br/>
-
+                <div class="col-sm-offset-4 col-sm-5">
+                    <h2 style="color: darkblue"> Insert Admin Credentials</h2>
+                    <h3 style="color:darkblue">Username</h3>
+                    <h:inputText styleClass="inputText" value="#{dWDataExtractionController.adminUsername}" required = "true" requiredMessage="Username is mandatory for the login"
+                                 id="username"/>
+                    <h:message style="color:red" for="username"/>
+                    <br/>
+                    <h3 style="color:darkblue">Password</h3>
+                    <h:inputText styleClass="inputText" value="#{dWDataExtractionController.adminPassword}" required = "true" requiredMessage="Password is mandatory for the login"
+                                 id="password"/>
+                    <h:message style="color:red" for="password"/>
+                    <br />
+                    <br />
+                    <br />
+                    <h:commandButton value="login"  styleClass="button"  action="#{dWDataExtractionController.loginAdmin}"/>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
             </h:form>
         </f:view>
     </div>

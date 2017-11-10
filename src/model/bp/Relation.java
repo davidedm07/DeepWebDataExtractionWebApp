@@ -12,6 +12,10 @@ public class Relation {
     private int arity;
     private Map<Attribute,List<String>> data;
 
+    public Relation() {
+
+    }
+
     public Relation(String name,List<Attribute> attributes) {
         this.name = name;
         this.attributes = attributes;
