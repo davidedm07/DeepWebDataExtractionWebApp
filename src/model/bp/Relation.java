@@ -13,6 +13,8 @@ public class Relation {
     private Map<Attribute,List<String>> data;
 
     public Relation() {
+        this.name="";
+        this.attributes = new ArrayList<>();
 
     }
 
@@ -91,7 +93,7 @@ public class Relation {
     }
 
     public static Relation createRelation(String pathToFile) {
-        Relation r = null;
+        Relation r = new Relation();
         try {
             FileReader fr = new FileReader(pathToFile);
             BufferedReader br = new BufferedReader(fr);

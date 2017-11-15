@@ -1,0 +1,4 @@
+AverageSalary
+Role:Role:Input;AverageSalary:Number:Output
+DBA;2000
+Analyst;3000

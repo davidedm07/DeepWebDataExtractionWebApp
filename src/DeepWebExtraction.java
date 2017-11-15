@@ -15,7 +15,7 @@ import model.sources.*;
 public class DeepWebExtraction {
 
 	public static void main(String[] args) {
-		/*
+		
 		InternetArchive source1 = new InternetArchive("https://archive.org");
 		Avax source2 = new Avax("http://avaxhome5lcpcok5.onion/");
 
@@ -38,7 +38,7 @@ public class DeepWebExtraction {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		*/
+
 		/*
 
 		Attribute name = new Attribute("Name", "Person",Attribute.AccessLimitation.INPUT);
@@ -93,6 +93,7 @@ public class DeepWebExtraction {
 		System.out.println(dgr.toString());
 		//Node n = sj.getNodesMap().get("Actor");
 		*/
+		/*
 		Relation department = Relation.createRelation("Department.txt");
 		Relation employee = Relation.createRelation("Employee.txt");
 		Relation project = Relation.createRelation("Project.txt");
@@ -107,6 +108,7 @@ public class DeepWebExtraction {
 		System.out.println(DeepWeb.checkCompatibility(q,s));
 		//System.out.println(DeepWeb.findWitnesses(s,q));
 		System.out.println(DeepWeb.queryAnswerExtraction(q,s));
+		*/
 		//System.out.println(r3.getName());
 		//System.out.println(DeepWeb.isUseful(query,schema,n));
 		//System.out.println(sj.getNodeArcs().toString());

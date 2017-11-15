@@ -1,0 +1,5 @@
+Taxes
+AverageSalary:Number:Input;Taxes:Number:Output
+3000;10
+4000;20
+2000;5
