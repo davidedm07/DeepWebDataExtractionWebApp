@@ -33,7 +33,10 @@ public class UserController {
         if(!DeepWeb.checkAnswerability(this.schema,query))
             return "notAnswerable?faces-redirect=true";
         this.result = DeepWeb.queryAnswerExtraction(this.query,this.schema);
-        return "result?faces-redirect=true";
+        if(result!=null)
+            return "result?faces-redirect=true";
+        else
+            return "errorResult?faces-redirect=true";
 
     }
 
