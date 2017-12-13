@@ -53,7 +53,8 @@
                         <c:forEach var="tuple" items="#{userController.result}">
                             <h:form>
                                 <tr>
-                                    <td><p style="font-size: 150%">${tuple}</p></td>
+                                    <td><p style="font-size: 150%">${tuple.keySet()}:</p>
+                                        <p style="font-size: 150%">${tuple.values()}</p></td>
                                 </tr>
                             </h:form>
                         </c:forEach>

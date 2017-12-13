@@ -30,12 +30,10 @@ public class DeepWeb {
     }
 
     private static boolean checkPath(String d1,String d2, SchemaJoinGraph s) {
-        List<String> domainsFound = new ArrayList<>();
         boolean found = false;
         List<Node> visited = new ArrayList<>();
         for(Node n: s.getNodes())
             if(n.getRelation().getDomainsMap().containsKey(d1)) {
-                domainsFound.add(d1);
                 for (Node dest : s.getNodeDestinations().get(n))
                     found = checkPathRec(d2, dest,s,visited);
                 if (found)
@@ -193,7 +191,6 @@ public class DeepWeb {
                 List<Node> path = new ArrayList<>();
                 path.addAll(tempPath);
                 witnessSingleStart.putIfAbsent(path, -1);
-                //visitedArcs.clear();
             }
             if(tempPath.size()>=1)
                 tempPath.remove(tempPath.size()-1);
@@ -278,8 +275,6 @@ public class DeepWeb {
         return new TreeMap<>(sortedWitnesses);
     }
 
-    //return value needs a fix
-    //missing instance of data as input parameter
     public static List<Map<Attribute,String>> queryAnswerExtraction(KeywordQuery q, Schema s) {
         if (!checkAnswerability(s,q))
             return null;
